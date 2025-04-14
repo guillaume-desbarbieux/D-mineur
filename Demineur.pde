@@ -63,12 +63,12 @@ void draw () {
 
   case INIT :
     initGame();
-    displayBoard();
     gameStep = RUNNING;
     break;
 
   case WAITING:
     displayWaitingScreen();
+    displayWaitingBoard();
     break ;
 
   case RUNNING :
@@ -77,6 +77,10 @@ void draw () {
     break ;
 
   case SUCCESS :
+  successBoard();
+  gameStep = WAITING;
+  break;
+  
   case DEFEAT :
   case AFK :
     displayBoard();
@@ -149,7 +153,25 @@ int countMinesAround (int x, int y) {
   return compteur;
 }
 
+void successBoard() {
+  for (int i=0; i<tableWidth; i++) {
+    for (int j=0; j<tableHeight; j++) {
+      if (tableau[i][j][TYPE]==MINE) {
+        tableau[i][j][STATUS] = TAG;
+      }
+    }
+  }
+}
 
+void defeatBoard() {
+  for (int i=0; i<tableWidth; i++) {
+    for (int j=0; j<tableHeight; j++) {
+      if (tableau[i][j][TYPE]==MINE) {
+        tableau[i][j][STATUS] = OPEN;
+      }
+    }
+  }
+}
 
 void displayBoard () {
   for (int i=0; i<tableWidth; i++) {
@@ -326,10 +348,10 @@ void displayTimer () {
 }
 
 void displayWaitingScreen() {
-  int waitingStep=((millis()-timeStart)/500)%4;
+  int stepNumber=((millis()-timeStart)/500)%4;
   String msg="";
   
-  switch(waitingStep) {
+  switch(stepNumber) {
   case 0 :
     msg = "Press any key";
     break;
@@ -344,12 +366,17 @@ void displayWaitingScreen() {
     break;
   }
 
-
   fill (COLOR_BACKGROUND);
   rect(0.5*cellSize, (tableHeight+2.5)*cellSize, width-cellSize, 1.1*cellSize);
   fill (COLOR_TEXT);
   text(msg, 0.5*cellSize, (tableHeight+3.5)*cellSize);
 }
+
+void displayWaitingBoard() {
+  int numberOfStep = ceil(min(tableWidth, tableHeight));
+  int stepNumber=((millis()-timeStart)/200)%numberOfStep;
+  
+  
 
 
 
