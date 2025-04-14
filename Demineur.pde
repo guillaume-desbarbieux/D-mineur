@@ -1,6 +1,6 @@
 int tableHeight = 10; // Hauteur du table //<>// //<>// //<>// //<>// //<>// //<>//
 int tableWidth = 10; // Largeur du table
-int numberOfMines = 2; // Nombre de Mines
+int numberOfMines = 10; // Nombre de Mines
 int cellSize = 40; // Taille d'affichage d'une cellule
 
 PImage img_mine;
@@ -326,8 +326,29 @@ void displayTimer () {
 }
 
 void displayWaitingScreen() {
-  color(COLOR_TEXT);
-  text("Press any key", 0, (tableHeight+3)*cellSize);
+  int waitingStep=((millis()-timeStart)/500)%4;
+  String msg="";
+  
+  switch(waitingStep) {
+  case 0 :
+    msg = "Press any key";
+    break;
+  case 1 :
+    msg = "Press any key.";
+    break;
+  case 2 :
+    msg = "Press any key..";
+    break;
+  case 3 :
+    msg = "Press any key...";
+    break;
+  }
+
+
+  fill (COLOR_BACKGROUND);
+  rect(0.5*cellSize, (tableHeight+2.5)*cellSize, width-cellSize, 1.1*cellSize);
+  fill (COLOR_TEXT);
+  text(msg, 0.5*cellSize, (tableHeight+3.5)*cellSize);
 }
 
 
