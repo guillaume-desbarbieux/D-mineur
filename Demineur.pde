@@ -1,4 +1,4 @@
-int tableHeight = 10; // Hauteur du table //<>//
+int tableHeight = 10; // Hauteur du table //<>// //<>// //<>// //<>// //<>// //<>//
 int tableWidth = 10; // Largeur du table
 int numberOfMines = 2; // Nombre de Mines
 int cellSize = 40; // Taille d'affichage d'une cellule
@@ -96,6 +96,7 @@ void initGame () {
   textSize(cellSize);
   initBoard();
   timeStart=millis();
+  timeLastClic=timeStart;
 }
 
 
@@ -169,11 +170,11 @@ void displayBoard () {
         displayCell_AFK(i, j);
         break ;
       }
-      displayCellText(i, j); //<>//
+      displayCellText(i, j);
     }
   }
 }
- //<>//
+
 void displayCell_RUNNING (int x, int y) {
   color cellColor = color (0);
   switch (table[x][y][STATUS]) {
@@ -181,11 +182,11 @@ void displayCell_RUNNING (int x, int y) {
   case OPEN :
     if (table[x][y][TYPE]==MINE) {
       cellColor = COLOR_MINE;
-    } else { //<>//
+    } else {
       cellColor = COLOR_EMPTY;
     }
     break;
- //<>//
+
   case CLOSE :
     cellColor = COLOR_CLOSE;
     break;
@@ -233,7 +234,7 @@ void displayCell_DEFEAT (int x, int y) {
       break;
     case OPEN :
       cellColor = COLOR_EMPTY;
-      break; //<>//
+      break;
     }
   }
   fill(cellColor);
@@ -355,6 +356,5 @@ void keyPressed() {
   if (gameStep==WAITING) {
     timeStart=millis();
     gameStep = INIT;
-    
   }
 }
